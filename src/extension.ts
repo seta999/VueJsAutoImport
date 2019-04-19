@@ -8,7 +8,7 @@ import { grepAsync } from './lib/grep'
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
-    vscode.commands.registerCommand('extension.vuejsAutoImport', async () => {
+    vscode.commands.registerCommand('extension.vuejsAutoImportForMe', async () => {
       const text: string = getText(
         vscode.window.activeTextEditor!.document,
         vscode.window.activeTextEditor!.selection.active
@@ -24,12 +24,21 @@ export function activate(context: vscode.ExtensionContext) {
 
       const rootPath = vscode.workspace.rootPath
         ? path.resolve(
-            vscode.workspace.rootPath,
-            vscode.workspace
-              .getConfiguration()
-              .get<string>('vuejsAutoImport.rootDirectory')!
-          )
+          vscode.workspace.rootPath,
+          vscode.workspace
+            .getConfiguration()
+            .get<string>('vuejsAutoImportForMe.rootDirectory')!
+        )
         : ''
+
+      // const rootRelative = vscode.workspace.rootRelative
+      //   ? path.resolve(
+      //     vscode.workspace.rootRelative,
+      //     vscode.workspaceπ
+      //       .getConfiguration()
+      //       .get<boolean>('vuejsAutoImport.rootRelative')!
+      //   )
+      //   : false
 
       const pathList: string[] = await grepAsync([
         path.join(rootPath, `**/${voca.camelCase(text)}.vue`),
@@ -38,24 +47,35 @@ export function activate(context: vscode.ExtensionContext) {
       ])
 
       const importCore = (fullPath: string) => {
-        const activeEditorPath = path.parse(
-          vscode.window.activeTextEditor!.document.fileName
-        )
+        let importPath = ''
         const parsedTargetFilePath = path.parse(fullPath)
+        // if (!rootRelative) {
+        //   const activeEditorPath = path.parse(
+        //     vscode.window.activeTextEditor!.document.fileName
+        //   )
+        //   const relationalDir = path.relative(
+        //     activeEditorPath.dir,
+        //     parsedTargetFilePath.dir
+        //   )
+        //   importPath = path
+        //     .join(relationalDir, parsedTargetFilePath.base)
+        //     .replace(/\\/g, '/')
+        //   // if just under
+        //   if (!importPath.startsWith('../')) {
+        //     importPath = './' + importPath
+        //   }
+        // }
+        // else {
         const relationalDir = path.relative(
-          activeEditorPath.dir,
+          vscode.workspace.rootPath!,
           parsedTargetFilePath.dir
         )
-        let relationalPath = path
+        importPath = '~/' + path
           .join(relationalDir, parsedTargetFilePath.base)
           .replace(/\\/g, '/')
+        // }
 
-        // if just under
-        if (!relationalPath.startsWith('../')) {
-          relationalPath = './' + relationalPath
-        }
-
-        importVueFile(parsedTargetFilePath.name, relationalPath)
+        importVueFile(parsedTargetFilePath.name, importPath)
       }
 
       if (pathList.length === 1) {

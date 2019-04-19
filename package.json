@@ -1,9 +1,9 @@
 {
-  "name": "vue-autoimport",
-  "displayName": "Vue.js AutoImport",
-  "description": "provide for vue.js support.",
-  "version": "1.0.1",
-  "publisher": "ishiyama",
+  "name": "vue-autoimport-seta999",
+  "displayName": "Vue.js AutoImport for seta999",
+  "description": "provide for vue.js support for seta999",
+  "version": "0.0.1",
+  "publisher": "seta999",
   "repository": "https://github.com/ishiyama0530/VueJsAutoImport",
   "icon": "asset/vue.png",
   "homepage": "https://github.com/ishiyama0530/VueJsAutoImport",
@@ -22,7 +22,7 @@
       "type": "object",
       "title": "Vue.js AutoImport",
       "properties": {
-        "vuejsAutoImport.rootDirectory": {
+        "vuejsAutoImportForMe.rootDirectory": {
           "type": "string",
           "default": "",
           "description": "root directory in workspace for file grep. ex) src"
@@ -31,24 +31,24 @@
     },
     "commands": [
       {
-        "command": "extension.vuejsAutoImport",
-        "title": "Import .vue"
+        "command": "extension.vuejsAutoImportForMe",
+        "title": "Import .vue for me"
       }
     ],
     "menus": {
       "editor/context": [
         {
           "when": "editorTextFocus",
-          "command": "extension.vuejsAutoImport",
+          "command": "extension.vuejsAutoImportForMe",
           "group": "navigation@1"
         }
       ]
     },
     "keybindings": [
       {
-        "command": "extension.vuejsAutoImport",
+        "command": "extension.vuejsAutoImportForMe",
         "key": "ctrl+/",
-        "mac": "cmd+/",
+        "mac": "alt+cmd+i",
         "when": "editorTextFocus"
       }
     ]
@@ -66,7 +66,7 @@
     "@types/node": "^8.10.25",
     "tslint": "^5.8.0",
     "typescript": "^2.6.1",
-    "vscode": "^1.1.21"
+    "vscode": "^1.1.33"
   },
   "dependencies": {
     "@types/voca": "^1.4.0",
