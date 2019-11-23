@@ -2,7 +2,7 @@
   "name": "vue-autoimport-seta999",
   "displayName": "Vue.js AutoImport for seta999",
   "description": "provide for vue.js support for seta999",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "publisher": "seta999",
   "repository": "https://github.com/ishiyama0530/VueJsAutoImport",
   "icon": "asset/vue.png",
